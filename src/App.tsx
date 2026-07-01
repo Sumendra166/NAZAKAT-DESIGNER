@@ -8,14 +8,13 @@ import { Upload, Sparkles, Wand2, Download, RefreshCw, Loader2, Info, Save, Hist
 // CONFIGURATION & SETUP (Mandatory Global Init Pattern)
 // ---------------------------------------------------------
 
-const isCanvas = typeof __firebase_config !== 'undefined';
-const firebaseConfig = isCanvas ? JSON.parse(__firebase_config) : {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "...",
-  appId: "..."
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "YOUR_FIREBASE_API_KEY",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "your-project.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "your-project-id",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "your-project.appspot.com",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "...",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "..."
 };
 
 // Initialize Firebase outside the component
@@ -23,11 +22,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// PERFECTED APP ID EXTRACTOR:
-const rawAppId = typeof __app_id !== 'undefined' ? String(__app_id) : 'default-app-id';
-const appId = rawAppId.split('/')[0];
+const appId = import.meta.env.VITE_APP_ID || 'default-app-id';
 
-const API_KEY = isCanvas ? "" : "YOUR_GEMINI_API_KEY_HERE";
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "YOUR_GEMINI_API_KEY_HERE";
 const API_MODEL_VISION = 'gemini-2.5-flash-preview-09-2025';
 const API_MODEL_IMAGE = 'imagen-4.0-generate-001';
 
